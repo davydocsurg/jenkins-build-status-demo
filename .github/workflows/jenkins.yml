@@ -16,4 +16,4 @@ jobs:
 
             - name: Trigger Jenkins Build
               run: |
-                  curl -X POST "http://your-jenkins-server/job/your-job-name/build?token=YOUR_JENKINS_TOKEN"
+                  curl -X POST "https://super-duper-telegram-vrrj47p54ww2xx47-8080.app.github.dev/job/test-build-stats/build?token=11b6e29d93f85392ad51d83aac0f73858c"
