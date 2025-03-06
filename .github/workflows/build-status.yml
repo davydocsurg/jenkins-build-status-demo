@@ -20,7 +20,7 @@ jobs:
                   https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
                   -d '{"state": "pending", "context": "Build", "description": "Build in progress..."}'
 
-            - name: Run Build Step
+            - name: Run Build Step please
               run: |
                   echo "Building project..."
                   sleep 10  # Simulate build process
