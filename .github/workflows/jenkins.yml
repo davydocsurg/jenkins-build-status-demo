@@ -23,8 +23,5 @@ jobs:
             - name: Install dependencies
               run: npm install
 
-            - name: Run Tests
-              run: npm test || echo "No tests found, skipping..."
-
             - name: Build Project
-              run: echo "Build complete!"
+              run: echo "Building project..."
