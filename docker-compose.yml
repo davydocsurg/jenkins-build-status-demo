@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+    jenkins:
+        build: .
+        container_name: jenkins
+        restart: unless-stopped
+        ports:
+            - "8080:8080"
+            - "50000:50000"
+        environment:
+            - JENKINS_OPTS="--prefix=/jenkins"
+        volumes:
+            - jenkins_home:/var/jenkins_home
+        networks:
+            - jenkins_network
+
+    ngrok:
+        image: ngrok/ngrok:latest
+        container_name: ngrok
+        restart: unless-stopped
+        command: ["http", "jenkins:8080", "--log", "stdout"]
+        environment:
+            - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+        volumes:
+            - ngrok_data:/home/ngrok
+        networks:
+            - jenkins_network
+
+volumes:
+    jenkins_home:
+    ngrok_data:
+
+networks:
+    jenkins_network:
+        driver: bridge

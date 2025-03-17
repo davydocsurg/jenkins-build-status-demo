@@ -1,9 +1,12 @@
 pipeline {
     agent any
+    triggers {
+        githubPush()
+    }
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                checkout scm
+                git 'https://github.com/YOUR_GITHUB_USER/YOUR_REPO.git'
             }
         }
         stage('Install Dependencies') {
@@ -13,12 +16,13 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                sh 'npm test || echo "No tests found, skipping..."'
+                sh 'npm test'
             }
         }
-        stage('Build') {
+        stage('Deploy') {
             steps {
-                sh 'echo "Build successful!"'
+                echo 'Deploying application...'
+                // Add deployment steps here
             }
         }
     }
