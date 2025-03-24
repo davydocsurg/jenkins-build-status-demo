@@ -1,9 +1,9 @@
-name: Secure Jenkins Trigger
+name: GitHub Actions + Jenkins Integration
 
 on:
     push:
         branches:
-            - main # Change this to your actual branch
+            - main
 
 jobs:
     trigger-jenkins:
@@ -57,16 +57,3 @@ jobs:
                       exit 1
                     fi
                   done
-            - name: Update GitHub Commit Status
-              run: |
-                  BUILD_STATUS=$(curl -s --user "$JENKINS_USER:$JENKINS_API_TOKEN" \
-                  "$JENKINS_URL/job/$JENKINS_JOB_NAME/lastBuild/api/json" | jq -r '.result')
-
-                  STATUS="failure"
-                  if [[ "$BUILD_STATUS" == "SUCCESS" ]]; then STATUS="success"; fi
-
-                  echo "Jenkins Build Status: $BUILD_STATUS"
-
-                  curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                   -d '{"state": "'"$STATUS"'", "context": "Jenkins CI/CD"}' \
-                   "https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }}"
